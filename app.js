@@ -134,16 +134,35 @@ function mainMenu() {
           type: 'input',
           name: 'managerId',
           message: "Enter the employee's manager ID (optional, press Enter if none):",
+          validate: (input) => {
+            // Validate the input to allow empty input (no manager)
+            if (input === '') {
+              return true;
+            }
+  
+            // Check if the input is a valid integer
+            const managerId = parseInt(input);
+            if (isNaN(managerId)) {
+              return 'Please enter a valid integer for the manager ID, or leave it empty.';
+            }
+  
+            return true;
+          },
         },
       ]);
   
-      await addEmployee(employee.firstName, employee.lastName, employee.roleId, employee.managerId);
+      // Convert the managerId to an integer or set it to null if empty
+      const parsedManagerId = employee.managerId === '' ? null : parseInt(employee.managerId);
+  
+      await addEmployee(employee.firstName, employee.lastName, employee.roleId, parsedManagerId);
       returnToMainMenu();
     } catch (error) {
       console.error('Error adding employee:', error);
       returnToMainMenu();
     }
   }
+
+  
   function returnToMainMenu() {
     console.log(); // Add an empty line for readability
     mainMenu();
