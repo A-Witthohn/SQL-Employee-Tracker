@@ -126,23 +126,25 @@ function addEmployee(firstName, lastName, roleId, managerId) {
 
 //update employee
 
-function updateEmployeeRole(employeeId, newRoleId) {
-    const connection = createConnection();
-
-    connection.query(
-        'UPDATE employee SET role_id = ? WHERE id = ?',
-        [newRoleId, employeeId],
-        err => {
-            if (err) {
-                console.error('Error updating employee role:', err);
-                return;
-            }
-
-            console.log('Employee role updated successfully!');
-            connection.end();
+function updateEmployeeRole(employeeId, roleId) {
+    return new Promise((resolve, reject) => {
+      const connection = createConnection();
+  
+      const sql = 'UPDATE employee SET role_id = ? WHERE id = ?';
+      const values = [roleId, employeeId];
+  
+      connection.query(sql, values, (err, result) => {
+        connection.end(); // Close the connection after the query is executed
+  
+        if (err) {
+          reject(err); // Reject the promise if there's an error
+        } else {
+          console.log(`${result.affectedRows} employee role updated.`);
+          resolve(); // Resolve the promise when the query is successful
         }
-    );
-}
+      });
+    });
+  }
 
 
 

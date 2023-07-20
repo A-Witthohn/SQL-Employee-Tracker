@@ -162,7 +162,31 @@ function mainMenu() {
     }
   }
 
+
+  async function promptUpdateEmployeeRole() {
+    try {
+      const employeeData = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'employeeId',
+          message: "Enter the ID of the employee you want to update:",
+        },
+        {
+          type: 'input',
+          name: 'roleId',
+          message: "Enter the new role ID for the employee:",
+        },
+      ]);
   
+      await updateEmployeeRole(employeeData.employeeId, employeeData.roleId);
+      returnToMainMenu();
+    } catch (error) {
+      console.error('Error updating employee role:', error);
+      returnToMainMenu();
+    }
+  }
+
+
   function returnToMainMenu() {
     console.log(); // Add an empty line for readability
     mainMenu();
