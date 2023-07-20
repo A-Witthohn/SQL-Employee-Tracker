@@ -84,7 +84,66 @@ function mainMenu() {
     }
   }
 
+  async function promptAddRole() {
+    try {
+      const role = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'title',
+          message: 'Enter the title of the role:',
+        },
+        {
+          type: 'input',
+          name: 'salary',
+          message: 'Enter the salary for the role:',
+        },
+        {
+          type: 'input',
+          name: 'departmentId',
+          message: 'Enter the department ID for the role:',
+        },
+      ]);
+  
+      await addRole(role.title, role.salary, role.departmentId);
+      returnToMainMenu();
+    } catch (error) {
+      console.error('Error adding role:', error);
+      returnToMainMenu();
+    }
+  }
 
+  async function promptAddEmployee() {
+    try {
+      const employee = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'firstName',
+          message: "Enter the employee's first name:",
+        },
+        {
+          type: 'input',
+          name: 'lastName',
+          message: "Enter the employee's last name:",
+        },
+        {
+          type: 'input',
+          name: 'roleId',
+          message: "Enter the employee's role ID:",
+        },
+        {
+          type: 'input',
+          name: 'managerId',
+          message: "Enter the employee's manager ID (optional, press Enter if none):",
+        },
+      ]);
+  
+      await addEmployee(employee.firstName, employee.lastName, employee.roleId, employee.managerId);
+      returnToMainMenu();
+    } catch (error) {
+      console.error('Error adding employee:', error);
+      returnToMainMenu();
+    }
+  }
   function returnToMainMenu() {
     console.log(); // Add an empty line for readability
     mainMenu();

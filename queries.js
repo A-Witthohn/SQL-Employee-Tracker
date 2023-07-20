@@ -84,41 +84,44 @@ function addDepartment(name) {
 // add role
 
 function addRole(title, salary, departmentId) {
+  return new Promise((resolve, reject) => {
     const connection = createConnection();
 
-    connection.query(
-        'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)',
-        [title, salary, departmentId],
-        err => {
-            if (err) {
-                console.error('Error adding role:', err);
-                return;
-            }
+    const sql = 'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)';
+    const values = [title, salary, departmentId];
 
-            console.log('Role added successfully!');
-            connection.end();
-        }
-    );
+    connection.query(sql, values, (err, result) => {
+      connection.end(); // Close the connection after the query is executed
+
+      if (err) {
+        reject(err); // Reject the promise if there's an error
+      } else {
+        console.log(`${result.affectedRows} role(s) added.`);
+        resolve(); // Resolve the promise when the query is successful
+      }
+    });
+  });
 }
-
 //add employee
 
 function addEmployee(firstName, lastName, roleId, managerId) {
+  return new Promise((resolve, reject) => {
     const connection = createConnection();
 
-    connection.query(
-        'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',
-        [firstName, lastName, roleId, managerId],
-        err => {
-            if (err) {
-                console.error('Error adding employee:', err);
-                return;
-            }
+    const sql = 'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
+    const values = [firstName, lastName, roleId, managerId];
 
-            console.log('Employee added successfully!');
-            connection.end();
-        }
-    );
+    connection.query(sql, values, (err, result) => {
+      connection.end(); // Close the connection after the query is executed
+
+      if (err) {
+        reject(err); // Reject the promise if there's an error
+      } else {
+        console.log(`${result.affectedRows} employee(s) added.`);
+        resolve(); // Resolve the promise when the query is successful
+      }
+    });
+  });
 }
 
 //update employee
