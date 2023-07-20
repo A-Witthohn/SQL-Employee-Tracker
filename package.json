@@ -1,0 +1,17 @@
+{
+    "name": " SQL Employee Tracker",
+    "version": "1.0.0",
+    "description": "The purpose of this tool is to demostrate a proficiency in SQL databases ",
+    "scripts": {
+        "test": "jest"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "inquirer": "^8.2.4",
+        "mysql2": "^3.5.2"
+    },
+    "devDependencies": {
+        "jest": "^27.5.1"
+    }
+}
