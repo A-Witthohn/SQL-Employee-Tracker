@@ -62,18 +62,24 @@ function viewAllEmployees() {
 //add department
 
 function addDepartment(name) {
-    const connection = createConnection();
-
-    connection.query('INSERT INTO department (name) VALUES (?)', [name], err => {
+    return new Promise((resolve, reject) => {
+      const connection = createConnection();
+  
+      const sql = 'INSERT INTO department (name) VALUES (?)';
+      const values = [name];
+  
+      connection.query(sql, values, (err, result) => {
         if (err) {
-            console.error('Error adding department:', err);
-            return;
+          reject(err); // Reject the promise if there's an error
+        } else {
+          console.log(`${result.affectedRows} department(s) added.`);
+          resolve(); // Resolve the promise when the query is successful
         }
-
-        console.log('Department added successfully!');
-        connection.end();
+  
+        connection.end(); // Close the connection after the query is executed
+      });
     });
-}
+  }
 
 // add role
 

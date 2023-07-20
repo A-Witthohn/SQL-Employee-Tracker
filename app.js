@@ -68,21 +68,20 @@ function mainMenu() {
       });
   }
 
-  function promptAddDepartment() {
-    inquirer
-      .prompt({
+  async function promptAddDepartment() {
+    try {
+      const department = await inquirer.prompt({
         type: 'input',
         name: 'name',
         message: 'Enter the name of the department:',
-      })
-      .then(({ name }) => {
-        addDepartment(name)
-          .then(() => returnToMainMenu())
-          .catch((error) => {
-            console.error('Error adding department:', error);
-            returnToMainMenu();
-          });
       });
+  
+      await addDepartment(department.name);
+      returnToMainMenu();
+    } catch (error) {
+      console.error('Error adding department:', error);
+      returnToMainMenu();
+    }
   }
 
 
