@@ -5,18 +5,22 @@ const createConnection = require('./connection');
 //view all departments
 
 function viewAllDepartments() {
-    const connection = createConnection();
-
-    connection.query('SELECT * FROM department', (err, results) => {
+    return new Promise((resolve, reject) => {
+      const connection = createConnection();
+  
+      connection.query('SELECT * FROM department', (err, results) => {
+        connection.end(); // Close the connection after the query is executed
+  
         if (err) {
-            console.error('Error retrieving departments:', err);
-            return;
+          reject(err); // Reject the promise if there's an error
+          return;
         }
-
+  
         console.table(results);
-        connection.end();
+        resolve(); // Resolve the promise when the query is successful
+      });
     });
-}
+  }
 //view all roles
 
 function viewAllRoles() {
@@ -29,7 +33,7 @@ function viewAllRoles() {
         }
 
         console.table(results);
-        connection.end();
+        
     });
 }
 
@@ -45,7 +49,7 @@ function viewAllEmployees() {
         }
 
         console.table(results);
-        connection.end();
+        
     });
 }
 

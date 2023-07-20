@@ -23,25 +23,30 @@ function mainMenu() {
       .then(({ action }) => {
         switch (action) {
           case 'View all departments':
-            viewAllDepartments();
+            viewAllDepartments()
+              .then(() => returnToMainMenu())
+              .catch((error) => {
+                console.error('Error displaying departments:', error);
+                returnToMainMenu();
+              });
             break;
           case 'View all roles':
-            viewAllRoles();
+            viewAllRoles().then(returnToMainMenu);
             break;
           case 'View all employees':
-            viewAllEmployees();
+            viewAllEmployees().then(returnToMainMenu);
             break;
           case 'Add a department':
-            promptAddDepartment();
+            promptAddDepartment().then(returnToMainMenu);
             break;
           case 'Add a role':
-            promptAddRole();
+            promptAddRole().then(returnToMainMenu);
             break;
           case 'Add an employee':
-            promptAddEmployee();
+            promptAddEmployee().then(returnToMainMenu);
             break;
           case 'Update an employee role':
-            promptUpdateEmployeeRole();
+            promptUpdateEmployeeRole().then(returnToMainMenu);
             break;
           case 'Exit':
             console.log('Goodbye!');
@@ -62,8 +67,16 @@ function mainMenu() {
       })
       .then(({ name }) => {
         addDepartment(name);
+        mainMenu();
       });
   }
 
 
+  function returnToMainMenu() {
+    console.log(); // Add an empty line for readability
+    mainMenu();
+  }
+
+
   mainMenu();
+
