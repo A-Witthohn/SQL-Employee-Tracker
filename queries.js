@@ -15,7 +15,22 @@ function viewAllDepartments() {
     });
   }
 
+  function viewAllRoles() {
+    const connection = createConnection();
+  
+    connection.query('SELECT * FROM role', (err, results) => {
+      if (err) {
+        console.error('Error retrieving roles:', err);
+        return;
+      }
+  
+      console.table(results);
+      connection.end();
+    });
+  }
+
 
   module.exports = {
     viewAllDepartments,
+    viewAllRoles,
   };
