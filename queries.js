@@ -6,50 +6,56 @@ const createConnection = require('./connection');
 
 function viewAllDepartments() {
     return new Promise((resolve, reject) => {
-      const connection = createConnection();
-  
-      connection.query('SELECT * FROM department', (err, results) => {
-        connection.end(); // Close the connection after the query is executed
-  
-        if (err) {
-          reject(err); // Reject the promise if there's an error
-          return;
-        }
-  
-        console.table(results);
-        resolve(); // Resolve the promise when the query is successful
-      });
+        const connection = createConnection();
+
+        connection.query('SELECT * FROM department', (err, results) => {
+            connection.end(); // Close the connection after the query is executed
+
+            if (err) {
+                reject(err); // Reject the promise if there's an error
+                return;
+            }
+
+            console.table(results);
+            resolve(); // Resolve the promise when the query is successful
+        });
     });
-  }
+}
 //view all roles
 
 function viewAllRoles() {
-    const connection = createConnection();
+    return new Promise((resolve, reject) => {
+        const connection = createConnection();
 
-    connection.query('SELECT * FROM role', (err, results) => {
-        if (err) {
-            console.error('Error retrieving roles:', err);
-            return;
-        }
+        connection.query('SELECT * FROM role', (err, results) => {
+            if (err) {
+                reject(err); // Reject the promise if there's an error
+                return;
+            }
 
-        console.table(results);
-        
+            console.table(results);
+            resolve(); // Resolve the promise when the query is successful
+
+        });
     });
 }
 
 //view all employees
 
 function viewAllEmployees() {
-    const connection = createConnection();
+    return new Promise((resolve, reject) => {
+        const connection = createConnection();
 
-    connection.query('SELECT * FROM employee', (err, results) => {
-        if (err) {
-            console.error('Error retrieving employees:', err);
-            return;
-        }
+        connection.query('SELECT * FROM employee', (err, results) => {
+            if (err) {
+                reject(err); // Reject the promise if there's an error
+                return;
+            }
 
-        console.table(results);
-        
+            console.table(results);
+            resolve(); // Resolve the promise when the query is successful
+
+        });
     });
 }
 
