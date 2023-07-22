@@ -176,9 +176,14 @@ function mainMenu() {
           name: 'roleId',
           message: "Enter the new role ID for the employee:",
         },
+        {
+          type: 'input',
+          name: 'managerId',
+          message: "Enter the new manager ID for the employee:",
+        },
       ]);
   
-      await updateEmployeeRole(employeeData.employeeId, employeeData.roleId);
+      await updateEmployeeRole(employeeData.employeeId, employeeData.roleId,employeeData.managerId);
       returnToMainMenu();
     } catch (error) {
       console.error('Error updating employee role:', error);
